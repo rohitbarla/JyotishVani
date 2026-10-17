@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function for admin authentication
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email in ['rohit.barla.ai.india@gmail.com', 'rohit.barla@gmail.com'] ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // Publicly readable astrological reference data
+    match /panchang/{date} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /horoscopes/{signId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Devotee subscribers: Only accessible by authenticated Admin or owner with matching phone
+    match /subscribers/{mobile} {
+      allow read: if isAdmin() || (
+        request.auth != null && request.auth.token.phone_number == ('+91' + mobile)
+      );
+      allow write: if false;
+    }
+
+    // Confidential callback requests
+    match /callbacks/{id} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // 1-on-1 Astrologer Consultations
+    match /consultations/{bookingId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Financial UPI transactions & payment verification logs
+    match /payments/{paymentId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Internal phone verification sessions
+    match /verifications/{mobile} {
+      allow read, write: if false;
+    }
+
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

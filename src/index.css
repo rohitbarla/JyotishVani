@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  .font-serif {
+    font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
+  }
+  .font-cinzel {
+    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  }
+}

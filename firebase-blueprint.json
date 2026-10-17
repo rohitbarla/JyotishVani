@@ -1,0 +1,146 @@
+{
+  "entities": {
+    "subscribers": {
+      "title": "Subscribers",
+      "description": "Devotee and astrology subscription profiles",
+      "type": "object",
+      "properties": {
+        "mobile": { "type": "string", "description": "10-digit mobile number" },
+        "name": { "type": "string", "description": "Subscriber full name" },
+        "email": { "type": "string", "description": "Optional email address" },
+        "zodiacSign": { "type": "string", "description": "Rashi / Vedic zodiac sign" },
+        "deliveryChannel": { "type": "string", "description": "Delivery channel whatsapp, sms, or both" },
+        "deliveryTime": { "type": "string", "description": "Preferred morning delivery time" },
+        "planId": { "type": "string", "description": "Plan identifier" },
+        "status": { "type": "string", "description": "Subscription status" },
+        "validUntil": { "type": "string", "description": "Validity expiration ISO date" },
+        "autoRenew": { "type": "boolean", "description": "Auto renew preference" },
+        "price": { "type": "number", "description": "Subscription price paid in INR" },
+        "planName": { "type": "string", "description": "Friendly plan label" },
+        "phoneVerified": { "type": "boolean", "description": "Whether phone was verified" },
+        "emailVerified": { "type": "boolean", "description": "Whether email was verified" },
+        "dob": { "type": "string", "description": "Date of birth" },
+        "tob": { "type": "string", "description": "Time of birth" },
+        "pob": { "type": "string", "description": "Place of birth" },
+        "gotra": { "type": "string", "description": "Vedic Gotra" },
+        "adminNotes": { "type": "string", "description": "Internal administrator remarks" },
+        "registeredAt": { "type": "string", "description": "Registration ISO timestamp" },
+        "updatedAt": { "type": "string", "description": "Last update ISO timestamp" }
+      },
+      "required": ["mobile", "name", "zodiacSign", "planId", "status"]
+    },
+    "callbacks": {
+      "title": "Offline Callbacks",
+      "description": "Callback requests from devotees for astrology consultations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique callback request id" },
+        "name": { "type": "string", "description": "Contact name" },
+        "mobile": { "type": "string", "description": "Phone number" },
+        "topic": { "type": "string", "description": "Consultation query topic" },
+        "status": { "type": "string", "description": "pending, contacted, or resolved" },
+        "notes": { "type": "string", "description": "Administrative notes" },
+        "requestedAt": { "type": "string", "description": "Request timestamp" }
+      },
+      "required": ["id", "mobile", "status", "requestedAt"]
+    },
+    "consultations": {
+      "title": "Astrologer Bookings",
+      "description": "Booked consultations with Vedic astrologers",
+      "type": "object",
+      "properties": {
+        "bookingId": { "type": "string", "description": "Unique booking identifier" },
+        "name": { "type": "string", "description": "Client name" },
+        "mobile": { "type": "string", "description": "Client mobile" },
+        "astrologerId": { "type": "string", "description": "Astrologer identifier" },
+        "astrologerName": { "type": "string", "description": "Astrologer name" },
+        "mode": { "type": "string", "description": "video or offline" },
+        "date": { "type": "string", "description": "Scheduled date" },
+        "timeSlot": { "type": "string", "description": "Scheduled time slot" },
+        "status": { "type": "string", "description": "Status of consultation" },
+        "paymentStatus": { "type": "string", "description": "Payment status" }
+      },
+      "required": ["bookingId", "mobile", "astrologerId", "mode", "date", "status"]
+    },
+    "panchang": {
+      "title": "Daily Vedic Panchang",
+      "description": "Panchang records for daily ephemeris calculations",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "description": "Date YYYY-MM-DD" },
+        "tithi": { "type": "string", "description": "Lunar tithi" },
+        "paksha": { "type": "string", "description": "Shukla or Krishna paksha" },
+        "nakshatra": { "type": "string", "description": "Constellation" },
+        "yoga": { "type": "string", "description": "Yoga" },
+        "karana": { "type": "string", "description": "Karana" },
+        "samvat": { "type": "string", "description": "Vikram Samvat year" },
+        "sunrise": { "type": "string", "description": "Sunrise time" },
+        "sunset": { "type": "string", "description": "Sunset time" },
+        "rahuKaal": { "type": "string", "description": "Rahu Kaal window" },
+        "abhijitMuhurat": { "type": "string", "description": "Abhijit Muhurat window" }
+      },
+      "required": ["date", "tithi", "nakshatra"]
+    },
+    "verifications": {
+      "title": "Phone Verifications",
+      "description": "Production phone OTP verification session records and audit logs",
+      "type": "object",
+      "properties": {
+        "mobile": { "type": "string", "description": "10-digit mobile number" },
+        "status": { "type": "string", "description": "pending, verified, expired, or failed" },
+        "attempts": { "type": "number", "description": "Number of OTP entry attempts" },
+        "provider": { "type": "string", "description": "Verification delivery provider" },
+        "verifiedAt": { "type": "string", "description": "ISO timestamp of successful verification" },
+        "expiresAt": { "type": "string", "description": "ISO timestamp of OTP expiration" }
+      },
+      "required": ["mobile", "status"]
+    },
+    "payments": {
+      "title": "UPI Payments",
+      "description": "UPI transactions and plan activation payment records",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique payment identifier" },
+        "mobile": { "type": "string", "description": "Subscriber mobile number" },
+        "userName": { "type": "string", "description": "Devotee name" },
+        "planId": { "type": "string", "description": "Plan ID" },
+        "planName": { "type": "string", "description": "Plan friendly name" },
+        "amount": { "type": "number", "description": "Payment amount in INR" },
+        "upiIdUsed": { "type": "string", "description": "UPI ID used" },
+        "utrNumber": { "type": "string", "description": "UTR reference number" },
+        "paymentMode": { "type": "string", "description": "upi_app, upi_qr, or upi_manual" },
+        "status": { "type": "string", "description": "verified, pending, rejected, or failed" },
+        "timestamp": { "type": "string", "description": "Creation timestamp" },
+        "adminNotes": { "type": "string", "description": "Administrative notes" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["id", "mobile", "amount", "status"]
+    }
+  },
+  "firestore": {
+    "/subscribers/{mobile}": {
+      "schema": "subscribers",
+      "description": "Collection of subscriber records indexed by mobile number"
+    },
+    "/callbacks/{id}": {
+      "schema": "callbacks",
+      "description": "Collection of offline callback inquiries"
+    },
+    "/consultations/{bookingId}": {
+      "schema": "consultations",
+      "description": "Collection of booked consultations"
+    },
+    "/panchang/{date}": {
+      "schema": "panchang",
+      "description": "Collection of daily Vedic Panchang ephemeris"
+    },
+    "/verifications/{mobile}": {
+      "schema": "verifications",
+      "description": "Collection of live phone OTP verification records"
+    },
+    "/payments/{id}": {
+      "schema": "payments",
+      "description": "Collection of UPI payment transactions"
+    }
+  }
+}

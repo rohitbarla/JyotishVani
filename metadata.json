@@ -1,0 +1,11 @@
+{
+  "name": "JyotishVani - Daily Horoscope & Astrology",
+  "description": "Daily personalized horoscope delivery to mobile and email with automated daily scheduler, 3-day free trial, today's auspicious timings & Panchang, AI Vedic astrology consultation, and offline connect at 9560169988.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
