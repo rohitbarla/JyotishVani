@@ -79,7 +79,18 @@ export const KendraStaffPortalPage: React.FC<KendraStaffPortalPageProps> = ({
   // Portal tab states: settings, subscribers, payments, leads, scheduler, panchang
   const [activeTab, setActiveTab] = useState<
     "settings" | "subscribers" | "payments" | "leads" | "scheduler" | "panchang"
-  >("panchang");
+  >(() => {
+    try {
+      const hash = window.location.hash.toLowerCase();
+      if (hash.includes("subscribers") || hash.includes("devotees")) return "subscribers";
+      if (hash.includes("payments")) return "payments";
+      if (hash.includes("leads")) return "leads";
+      if (hash.includes("scheduler")) return "scheduler";
+      if (hash.includes("settings")) return "settings";
+      if (hash.includes("panchang")) return "panchang";
+    } catch {}
+    return "subscribers";
+  });
 
   // Data states
   const [loading, setLoading] = useState(false);
@@ -1694,8 +1705,40 @@ export const KendraStaffPortalPage: React.FC<KendraStaffPortalPageProps> = ({
                 <tbody className="divide-y divide-[#E8E6DF]">
                   {filteredSubscribers.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-8 text-center text-[#7A7A7A]">
-                        No matching subscribers found in database.
+                      <td colSpan={6} className="py-12 text-center text-[#7A7A7A] space-y-3">
+                        <Users className="w-8 h-8 text-[#CB997E] mx-auto opacity-60" />
+                        <p className="font-semibold text-sm text-[#3D3D3D]">
+                          {subscribers.length === 0
+                            ? "No subscribers loaded from database"
+                            : "No matching subscribers found for this filter."}
+                        </p>
+                        <p className="text-xs text-[#7A7A7A] max-w-sm mx-auto">
+                          {subscribers.length === 0
+                            ? "If your administrator session expired after server restart, please click Refresh or re-enter your security passcode."
+                            : "Try clearing search or clicking 'All' filter button."}
+                        </p>
+                        <div className="flex items-center justify-center gap-2 pt-1">
+                          <button
+                            type="button"
+                            onClick={fetchAllData}
+                            className="px-3.5 py-1.5 rounded-xl bg-[#5C6B5A] hover:bg-[#4E5B4C] text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5 mx-auto shadow-xs"
+                          >
+                            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+                            <span>Reload Devotee Directory</span>
+                          </button>
+                          {subFilter !== "all" && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSubFilter("all");
+                                setSubSearch("");
+                              }}
+                              className="px-3 py-1.5 rounded-xl border border-[#E8E6DF] hover:bg-[#FAF9F6] text-xs font-bold text-[#5C6B5A] cursor-pointer"
+                            >
+                              Show All Devotees
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ) : (

@@ -289,6 +289,7 @@ export default function App() {
           } catch {}
         }}
         dynamicSettings={dynamicSettings}
+        onNavigateStaffPortal={() => navigateTo("staff")}
       />
 
       {/* Main Content Area */}

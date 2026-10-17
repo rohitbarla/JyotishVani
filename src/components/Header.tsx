@@ -31,6 +31,7 @@ interface HeaderProps {
   onOpenAutoRenew?: () => void;
   onUserUpdate?: (updatedUser: UserSubscription) => void;
   dynamicSettings?: DynamicSettings | null;
+  onNavigateStaffPortal?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -41,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAutoRenew,
   onUserUpdate,
   dynamicSettings,
+  onNavigateStaffPortal,
 }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -258,6 +260,17 @@ export const Header: React.FC<HeaderProps> = ({
             <Phone className="w-3.5 h-3.5 text-[#CB997E]" />
             <span>Offline Connect</span>
           </button>
+          {onNavigateStaffPortal && (
+            <button
+              onClick={onNavigateStaffPortal}
+              className="hover:text-[#CB997E] transition-colors cursor-pointer flex items-center gap-1.5 text-[#8B9D83] font-bold"
+              id="nav-staff-portal"
+              title="Staff & Admin Portal: Devotee Master Directory, Panchang & Scheduler"
+            >
+              <Shield className="w-3.5 h-3.5" />
+              <span>Admin / Staff</span>
+            </button>
+          )}
         </nav>
 
         {/* Right CTA / Active User Status */}
